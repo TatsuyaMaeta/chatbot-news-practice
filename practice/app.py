@@ -16,7 +16,7 @@ def api_recommend_article():
     """はてブのホットエントリーから記事を入手して、ランダムに1件返却します."""
 
     """
-        **** ここを実装します ****
+        **** ここを実装します（基礎課題） ****
 
         1. はてブのホットエントリーページのHTMLを取得する
         2. BeautifulSoupでHTMLを読み込む
@@ -28,6 +28,21 @@ def api_recommend_article():
                 "link" : "記事のURL"
             }
     """
+    """
+    #1.はてブのホットエントリーページのHTMLを取得する
+    #url関数で引数にURLを渡してコーディング上ではresの名前で使えるようにする
+    """
+
+    with urlopen("http://feeds.feedburner.com/hatena/b/hotentry") as res:
+        """#utf-8に変換して処理に使用"""
+        html = res.read().decode("utf-8")
+    print(html)
+    #2. BeautifulSoupでHTMLを読み込む
+    soup = BeautifulSoup(html, "html.parser")
+
+    print(soup.select("item")[1])
+    #3.記事一覧を取得する
+
 
     # ダミー
     return json.dumps({
@@ -45,5 +60,7 @@ def api_xxxx():
     """
     pass
 
+"""
 if __name__ == "__main__":
     app.run(debug=True, port=5004)
+"""
