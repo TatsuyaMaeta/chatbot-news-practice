@@ -33,21 +33,25 @@ def api_recommend_article():
     #url関数で引数にURLを渡してコーディング上ではresの名前で使えるようにする
     """
 
-    with urlopen("http://feeds.feedburner.com/hatena/b/hotentry") as res:
+    with urlopen("http://feedsgig.feedburner.com/hatena/b/hotentry") as res:
         """#utf-8に変換して処理に使用"""
         html = res.read().decode("utf-8")
     print(html)
-    #2. BeautifulSoupでHTMLを読み込む
+    """#2. BeautifulSoupでHTMLを読み込む"""
     soup = BeautifulSoup(html, "html.parser")
 
     print(soup.select("item")[1])
-    #3.記事一覧を取得する
+    """#3.記事一覧を取得する"""
 
+    items = soup.select("item")
+    shuffle(items)
+    item = items[1]
+    print(item)
 
     # ダミー
     return json.dumps({
-        "content" : "記事のタイトルだよー",
-        "link" : "記事のURLだよー"
+        "content" :item.find("title").string,
+        "link" : item.get('ref:about')
     })
 
 @app.route("/api/xxxx")
